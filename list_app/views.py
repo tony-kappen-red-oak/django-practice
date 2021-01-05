@@ -3,29 +3,38 @@ from django.http import HttpResponse,HttpResponseNotFound,HttpResponseNotAllowed
 from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import Item
+import json
 # Create your views here.
 def index(request):
     return render(request,"index.html")
 def list_view(request,pk):
+    u = User.objects.get(pk=pk)
+    i = Item.objects.filter(item_owner_id=u,item_done=False)
+    i = i.order_by('item_prio')
     return render(request,'list.html',{
-        'id':pk,
+        'user':u,
+        'items':i,
     })
+def save_tasks(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    data = body['data']
+    for i in data:
+        item = Item.objects.get(pk=i['id'])
+        item.item_done = i['is_done']
+        item.item_prio = i['priority']
+        item.save()
+    return HttpResponse("saved!")
 def add_task(request,pk):
-    print("here!")
     task = request.POST["task"]
     prio = request.POST["priority"]
     user = User.objects.get(pk = pk)
-    print(pk)
-    print(task)
-    print(prio)
     i = Item()
     i.item_owner_id = user
     i.item_prio = prio
     i.item_text = task
-    print(i)
     i.save()
-    return HttpResponse("hello")
-    # return HttpResponseRedirect(reverse(request,"list_view",args=(id,)))
+    return HttpResponseRedirect(reverse("list_view",args=(pk,)))
 def loginOrSignUp(request):
     if request.method == "POST":
         username = request.POST["username"]
