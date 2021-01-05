@@ -39,6 +39,8 @@ def add_task(request,pk):
     i.save()
     return HttpResponseRedirect(reverse("list_view",args=(pk,)))
 def loginOrSignUp(request):
+    print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    print(request)
     if request.method == "POST":
         try:
             username = request.POST["username"]
