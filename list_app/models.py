@@ -7,4 +7,4 @@ class Item(models.Model):
     item_prio = models.IntegerField(default=0)
     item_done = models.BooleanField(default=False)
     def __str__(self):
-        return str(self.item_owner_id)
+        return str(self.item_owner_id) + " " + str(self.item_prio)

@@ -11,6 +11,7 @@ def list_view(request,pk):
     u = User.objects.get(pk=pk)
     i = Item.objects.filter(item_owner_id=u,item_done=False)
     i = i.order_by('item_prio')
+    print(i)
     return render(request,'list.html',{
         'user':u,
         'items':i,
@@ -21,9 +22,11 @@ def save_tasks(request):
     data = body['data']
     for i in data:
         item = Item.objects.get(pk=i['id'])
-        item.item_done = i['is_done']
-        item.item_prio = i['priority']
-        item.save()
+        if i['is_done']:
+            item.delete()
+        else:
+            item.item_prio = i['priority']
+            item.save()
     return HttpResponse("saved!")
 def add_task(request,pk):
     task = request.POST["task"]
