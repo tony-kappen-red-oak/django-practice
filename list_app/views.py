@@ -40,7 +40,6 @@ def add_task(request,pk):
     return HttpResponseRedirect(reverse("list_view",args=(pk,)))
 def loginOrSignUp(request):
     print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    print(request)
     if request.method == "POST":
         try:
             username = request.POST["username"]
@@ -60,6 +59,7 @@ def loginOrSignUp(request):
                     return HttpResponseNotAllowed("Wrong username/password")
                 pass
         except(e):
+            print("Caught Exception")
             print(e)
     else:
         return HttpResponseNotFound("Not Found!")
