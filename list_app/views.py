@@ -45,9 +45,9 @@ def loginOrSignUp(request):
             password = request.POST["password"]
             print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             users = User.objects.filter(username=username)
+            print(username,password)
             if len(users) == 0:
                 #sign up
-                print(username,password)
                 u = User(is_superuser=False,username=username,password=password)
                 u.save()
                 return HttpResponseRedirect(reverse('list_view',args=(u.pk,)))
