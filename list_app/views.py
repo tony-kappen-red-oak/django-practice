@@ -46,7 +46,7 @@ def loginOrSignUp(request):
             print("here 1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             users = User.objects.filter(username=username)
             print("here 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print(users)
+            print(type(users))
             if len(users) == 0:
                 print("here 3!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 #sign up
