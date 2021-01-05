@@ -40,21 +40,24 @@ def add_task(request,pk):
     return HttpResponseRedirect(reverse("list_view",args=(pk,)))
 def loginOrSignUp(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        users = User.objects.filter(username=username)
-        if len(users) == 0:
-            #sign up
-            u = User(is_superuser=False,username=username,password=password)
-            u.save()
-            return HttpResponseRedirect(reverse('list_view',args=(u.pk,)))
-        else:
-            user = users[0] 
-            if user.password == password:
-                #grant access
-                return HttpResponseRedirect(reverse('list_view',args=(user.pk,)))
+        try:
+            username = request.POST["username"]
+            password = request.POST["password"]
+            users = User.objects.filter(username=username)
+            if len(users) == 0:
+                #sign up
+                u = User(is_superuser=False,username=username,password=password)
+                u.save()
+                return HttpResponseRedirect(reverse('list_view',args=(u.pk,)))
             else:
-                return HttpResponseNotAllowed("Wrong username/password")
-            pass
+                user = users[0] 
+                if user.password == password:
+                    #grant access
+                    return HttpResponseRedirect(reverse('list_view',args=(user.pk,)))
+                else:
+                    return HttpResponseNotAllowed("Wrong username/password")
+                pass
+        except(e):
+            print(e)
     else:
         return HttpResponseNotFound("Not Found!")
