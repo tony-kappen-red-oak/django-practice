@@ -41,9 +41,10 @@ def add_task(request,pk):
 def loginOrSignUp(request):
     if request.method == "POST":
         try:
-            print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             username = request.POST["username"]
             password = request.POST["password"]
+            print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print(username,password)
             users = User.objects.filter(username=username)
             if len(users) == 0:
                 #sign up
