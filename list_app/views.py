@@ -44,10 +44,10 @@ def loginOrSignUp(request):
             username = request.POST["username"]
             password = request.POST["password"]
             print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print(username,password)
             users = User.objects.filter(username=username)
             if len(users) == 0:
                 #sign up
+                print(username,password)
                 u = User(is_superuser=False,username=username,password=password)
                 u.save()
                 return HttpResponseRedirect(reverse('list_view',args=(u.pk,)))
