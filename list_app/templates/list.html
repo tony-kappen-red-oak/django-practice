@@ -1,0 +1,14 @@
+<h1>to do list of user {{id}}</h1>
+
+<form action="{%url 'add-task' id %}" method="post">
+    {%csrf_token%}
+    <div class="block">
+        <label>task</label>
+        <input type="text" name = "task" placeholder="task" >
+    </div>
+    <div class="block">
+        <label>priority</label>
+        <input type="number" min="0" max="10" name="priority"> 
+    </div>
+    <button type="submit">add task</button>
+</form>
