@@ -43,8 +43,9 @@ def loginOrSignUp(request):
         try:
             username = request.POST["username"]
             password = request.POST["password"]
-            print("here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("here 1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             users = User.objects.filter(username=username)
+            print("here 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             print(users)
             if len(users) == 0:
                 #sign up
