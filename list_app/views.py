@@ -48,11 +48,13 @@ def loginOrSignUp(request):
             print("here 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             print(users)
             if len(users) == 0:
+                print("here 3!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 #sign up
                 u = User(is_superuser=False,username=username,password=password)
                 u.save()
                 return HttpResponseRedirect(reverse('list_view',args=(u.pk,)))
             else:
+                print("here 4!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 user = users[0] 
                 if user.password == password:
                     #grant access
